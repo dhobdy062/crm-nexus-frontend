@@ -1,5 +1,5 @@
 
-import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 import { useState, useEffect, createContext, useContext } from "react";
 import { SidebarProvider } from "@/components/ui/sidebar";
 import Login from "@/components/auth/Login";
@@ -89,33 +89,31 @@ const Index = () => {
 
   return (
     <AuthContext.Provider value={{ user, isAuthenticated, login, logout }}>
-      <Router>
-        {!isAuthenticated ? (
-          <Routes>
-            <Route path="/login" element={<Login />} />
-            <Route path="/register" element={<Register />} />
-            <Route path="*" element={<Navigate to="/login" replace />} />
-          </Routes>
-        ) : (
-          <SidebarProvider>
-            <div className="min-h-screen flex w-full bg-gray-50">
-              <MainLayout>
-                <Routes>
-                  <Route path="/" element={<Dashboard />} />
-                  <Route path="/dashboard" element={<Dashboard />} />
-                  <Route path="/contacts" element={<ContactList />} />
-                  <Route path="/leads" element={<LeadList />} />
-                  <Route path="/properties" element={<PropertyList />} />
-                  <Route path="/transactions" element={<TransactionList />} />
-                  <Route path="/tasks" element={<TaskList />} />
-                  <Route path="/communications" element={<CommunicationList />} />
-                  <Route path="*" element={<Navigate to="/dashboard" replace />} />
-                </Routes>
-              </MainLayout>
-            </div>
-          </SidebarProvider>
-        )}
-      </Router>
+      {!isAuthenticated ? (
+        <Routes>
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="*" element={<Navigate to="/login" replace />} />
+        </Routes>
+      ) : (
+        <SidebarProvider>
+          <div className="min-h-screen flex w-full bg-gray-50">
+            <MainLayout>
+              <Routes>
+                <Route path="/" element={<Dashboard />} />
+                <Route path="/dashboard" element={<Dashboard />} />
+                <Route path="/contacts" element={<ContactList />} />
+                <Route path="/leads" element={<LeadList />} />
+                <Route path="/properties" element={<PropertyList />} />
+                <Route path="/transactions" element={<TransactionList />} />
+                <Route path="/tasks" element={<TaskList />} />
+                <Route path="/communications" element={<CommunicationList />} />
+                <Route path="*" element={<Navigate to="/dashboard" replace />} />
+              </Routes>
+            </MainLayout>
+          </div>
+        </SidebarProvider>
+      )}
     </AuthContext.Provider>
   );
 };
